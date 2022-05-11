@@ -1,0 +1,113 @@
+body {
+	background-color:#fcf8e8;
+	font-size:11px;
+	font-family:"Roboto", sans-serif;
+	color:#40394a;
+}
+img {
+	width:100%;
+}
+i {
+	margin-right:15px;
+	margin-left:10px;
+	color: #df7861;
+	width: 1rem;
+	height: 1rem;
+}
+hr {
+	width: 95%;
+	border:0;
+	border-top:1px solid #df7861;
+}
+p {
+	font-size: 1rem;
+}
+.boxShadow {
+	box-shadow: 5px 5px 5px grey;
+	}
+
+.container {
+	width: 100%;
+	margin: 0 auto;
+	font-size: 1rem;
+	display:flex;
+	justify-content: space-between;
+}
+.container .LeftCol {
+	background-color: white;
+	width: 30%;
+}
+
+.container .TitleName {
+	width: 90%;
+	margin:0 auto;
+	margin-top: -4.8em;
+}
+.container .TitleName h1 {
+	color: white;
+	font-weight: 200;
+}
+.container .About {
+	width: 95%;
+	margin:0 auto;
+	margin-top:30px;
+}
+.container .Skills {
+	width: 90%;
+	margin:0 auto;
+}
+.container .Skills h2 {
+	font-weight: 400;
+	font-size: 1.5rem;
+	margin-left: -13px;
+}
+.container .Skills .SkillBar {
+	width: 100%;
+	background-color: #ecb390;
+	border-radius: 25px;
+}
+.container .Skills .SkillBarLoad {
+	border-radius: 25px;
+	background-color:#df7861;
+}
+.container .Skills .SkillBarLoad p {
+	text-align: right;
+	color: white;
+	font-size:0.8rem;
+	margin-right: 10px;
+}
+
+.container .RightCol {
+	background-color: white;
+	width: 68%;
+}
+.container .RightCol h1 {
+	font-size:1.5rem;
+	margin-top: 3rem;
+	margin-bottom: 3rem;
+}
+.container .RightCol h2 {
+	font-size:1.2rem;
+}
+.container .WorkExp {
+	width: 95%;
+	margin:0 auto;
+}
+.container .WorkExp .date {
+	color:#df7861;
+}
+.container .footer {
+	width: 100%;
+	text-align:center;
+}
+
+@media (max-width: 600px) {
+	.container {
+		flex-direction: column;
+	}
+	.container .LeftCol,
+	.container .RightCol {
+		margin-bottom: 1em;
+		width: 100%;
+	}
+}
