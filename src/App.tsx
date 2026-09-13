@@ -11,18 +11,14 @@ import {
   ExternalLink,
   FileCode2,
   Github,
-  Globe2,
   Layers3,
   Linkedin,
   Mail,
   MapPin,
   Menu,
-  MessageSquareText,
   Network,
   Phone,
-  Search,
   Server,
-  Sparkles,
   Terminal,
   Timer,
   X,
@@ -31,12 +27,12 @@ import {
 import {
   accentClasses,
   snippets,
-  LANGS,
-  LANG_LABELS,
+  type Lang,
   type Category,
   type SnippetKey,
 } from '@/i18n/translations';
 import { useLanguage } from '@/i18n/useLanguage';
+import { FlagUK, FlagSpain, FlagBrazil } from '@/components/Flags';
 
 type ToastMessage = string | null;
 
@@ -52,7 +48,6 @@ function App() {
   const [cliInput, setCliInput] = useState('');
   const [cliOutput, setCliOutput] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [langMenuOpen, setLangMenuOpen] = useState(false);
 
   const visibleCompetencies = useMemo(
     () => category === 'all' ? t.architecture.competencies : t.architecture.competencies.filter((item) => item.category === category),
@@ -112,42 +107,54 @@ function App() {
       <div className="pointer-events-none fixed -right-48 top-[38%] z-0 h-[32rem] w-[32rem] rounded-full bg-emerald-500/10 blur-[140px]" />
 
       <header className="sticky top-0 z-40 border-b border-white/[0.07] bg-[#090a0f]/85 backdrop-blur-xl">
-        <div className="relative mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:gap-6 lg:px-8">
+        <div className="relative mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:gap-6 lg:px-8">
           <a href="#hero" className="group flex shrink-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
             <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-400/40 bg-gradient-to-br from-indigo-500/90 to-emerald-400/80 font-mono text-xs font-bold text-white shadow-lg shadow-indigo-500/20">WA</span>
             <span className="hidden flex-col sm:flex"><strong className="whitespace-nowrap text-sm font-bold tracking-tight text-white">Wellington Almeida</strong><small className="whitespace-nowrap font-mono text-[10px] tracking-wide text-slate-400">CTO & Solutions Architect</small></span>
           </a>
-          <nav className={`${menuOpen ? 'absolute left-4 right-4 top-[4.5rem] z-50 flex' : 'hidden'} flex-col gap-1 rounded-xl border border-white/10 bg-[#11141e]/95 p-3 shadow-2xl xl:absolute xl:left-1/2 xl:top-1/2 xl:z-auto xl:flex xl:-translate-x-1/2 xl:-translate-y-1/2 xl:flex-row xl:items-center xl:border-0 xl:bg-transparent xl:p-0 xl:shadow-none`}>
-            {navItems.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)} className="whitespace-nowrap rounded-md px-3 py-2 text-xs font-medium text-slate-400 transition hover:bg-white/[0.05] hover:text-white">{label}</a>)}
+
+          {/* Desktop nav — centered, only visible on xl+ */}
+          <nav className="hidden xl:absolute xl:left-1/2 xl:top-1/2 xl:flex xl:-translate-x-1/2 xl:-translate-y-1/2 xl:flex-row xl:items-center xl:gap-1">
+            {navItems.map(([label, href]) => <a key={label} href={href} className="whitespace-nowrap rounded-md px-3 py-2 text-xs font-medium text-slate-400 transition hover:bg-white/[0.05] hover:text-white">{label}</a>)}
           </nav>
-          <div className="flex shrink-0 items-center gap-2">
-            <div className="relative">
-              <button onClick={() => setLangMenuOpen((open) => !open)} className="icon-button gap-1.5 px-2.5" aria-label="Select language" aria-expanded={langMenuOpen}>
-                <Globe2 size={15} />
-                <span className="font-mono text-[10px] font-semibold">{LANG_LABELS[lang]}</span>
-                <ChevronDown size={11} className={`transition ${langMenuOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {langMenuOpen && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setLangMenuOpen(false)} />
-                  <div className="absolute right-0 top-[2.75rem] z-50 w-36 rounded-xl border border-white/10 bg-[#11141e]/95 p-1.5 shadow-2xl backdrop-blur-xl">
-                    {LANGS.map((l) => (
-                      <button key={l} onClick={() => { setLang(l); setLangMenuOpen(false); }} className={`flex w-full items-center justify-between rounded-lg px-3 py-2 font-mono text-xs transition ${l === lang ? 'bg-indigo-600/25 text-white' : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'}`}>
-                        <span>{LANG_LABELS[l]}</span>
-                        <span className="text-[10px] opacity-70">{l === lang ? '●' : ''}</span>
-                      </button>
-                    ))}
-                  </div>
-                </>
-              )}
+
+          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            {/* Language flags */}
+            <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.03] p-1" role="group" aria-label="Language selection">
+              {([
+                ['en', FlagUK],
+                ['es', FlagSpain],
+                ['pt', FlagBrazil],
+              ] as [Lang, typeof FlagUK][]).map(([code, Flag]) => (
+                <button key={code} onClick={() => setLang(code)} className={`flag-button ${lang === code ? 'flag-button-active' : ''}`} aria-label={`${code === 'en' ? 'English' : code === 'es' ? 'Español' : 'Português'}`} aria-pressed={lang === code}>
+                  <Flag className="h-full w-full rounded-sm" />
+                </button>
+              ))}
             </div>
-            <button onClick={() => copyText(email, t.specs.toast.email)} className="action-button" aria-label="Copy email address to clipboard"><Mail size={14} /><span className="hidden sm:inline">{t.nav.copyEmail}</span></button>
-            <button onClick={() => window.print()} className="primary-button"><ArrowDownToLine size={14} /><span>{t.nav.resumePdf}</span></button>
-            <a href="https://linkedin.com/in/wellington-almeida-4202099b" target="_blank" rel="noreferrer" className="icon-button hidden sm:inline-flex" aria-label="LinkedIn"><Linkedin size={15} /></a>
-            <a href="https://github.com/wellyington" target="_blank" rel="noreferrer" className="icon-button hidden sm:inline-flex" aria-label="GitHub"><Github size={15} /></a>
+            <button onClick={() => copyText(email, t.specs.toast.email)} className="action-button hidden sm:inline-flex" aria-label="Copy email address to clipboard"><Mail size={14} /><span className="hidden lg:inline">{t.nav.copyEmail}</span></button>
+            <button onClick={() => window.print()} className="primary-button hidden sm:inline-flex"><ArrowDownToLine size={14} /><span className="hidden lg:inline">{t.nav.resumePdf}</span></button>
+            <a href="https://linkedin.com/in/wellington-almeida-4202099b" target="_blank" rel="noreferrer" className="icon-button hidden lg:inline-flex" aria-label="LinkedIn"><Linkedin size={15} /></a>
+            <a href="https://github.com/wellyington" target="_blank" rel="noreferrer" className="icon-button hidden lg:inline-flex" aria-label="GitHub"><Github size={15} /></a>
             <button onClick={() => setMenuOpen((open) => !open)} className="icon-button xl:hidden" aria-label="Toggle menu">{menuOpen ? <X size={17} /> : <Menu size={17} />}</button>
           </div>
         </div>
+
+        {/* Mobile/tablet dropdown menu — below the header bar */}
+        {menuOpen && (
+          <div className="absolute left-0 right-0 top-full z-50 border-b border-white/10 bg-[#11141e]/95 p-4 shadow-2xl backdrop-blur-xl xl:hidden">
+            <nav className="flex flex-col gap-1">
+              {navItems.map(([label, href]) => <a key={label} href={href} onClick={() => setMenuOpen(false)} className="rounded-md px-3 py-2.5 text-sm font-medium text-slate-400 transition hover:bg-white/[0.05] hover:text-white">{label}</a>)}
+            </nav>
+            <div className="mt-3 flex items-center gap-2 border-t border-white/10 pt-3">
+              <button onClick={() => { copyText(email, t.specs.toast.email); setMenuOpen(false); }} className="action-button flex-1"><Mail size={14} /> {t.nav.copyEmail}</button>
+              <button onClick={() => { window.print(); setMenuOpen(false); }} className="primary-button flex-1"><ArrowDownToLine size={14} /> {t.nav.resumePdf}</button>
+            </div>
+            <div className="mt-2 flex items-center gap-2">
+              <a href="https://linkedin.com/in/wellington-almeida-4202099b" target="_blank" rel="noreferrer" className="action-button flex-1 justify-center" onClick={() => setMenuOpen(false)}><Linkedin size={14} /> LinkedIn</a>
+              <a href="https://github.com/wellyington" target="_blank" rel="noreferrer" className="action-button flex-1 justify-center" onClick={() => setMenuOpen(false)}><Github size={14} /> GitHub</a>
+            </div>
+          </div>
+        )}
       </header>
 
       {toast && <div className="fixed bottom-6 right-4 z-50 flex max-w-[calc(100%-2rem)] items-center gap-3 rounded-xl border border-emerald-500/35 bg-[#111722]/95 px-4 py-3 font-mono text-xs text-emerald-200 shadow-2xl shadow-emerald-950/30"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-300"><Check size={14} /></span>{toast}</div>}
