@@ -50,7 +50,7 @@
       ]
     }
     </script>
-    <meta property="og:image" content="https://bolt.new/static/og_default.png">
+  <meta property="og:image" content="https://bolt.new/static/og_default.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
 </head>
@@ -70,7 +70,17 @@
         </div>
       </noscript>
       <script>
-        (function(){var el=document.getElementById('initial-loader');if(!el)return;var t=setTimeout(function(){el.innerHTML='<div style="text-align:center"><p style="color:#e2e8f0;margin:0 0 .5rem">Portfolio failed to load</p><p style="color:#64748b;margin:0">Try a hard refresh (Ctrl+Shift+R). If the problem persists, the deployment may still be updating.</p></div>';},8000);window.addEventListener('load',function(){clearTimeout(t);var root=document.getElementById('root');if(root&&root.querySelector('#initial-loader')){setTimeout(function(){if(root.querySelector('#initial-loader')){root.removeChild(el);}},200);}});})();
+        (function(){
+          var el=document.getElementById('initial-loader');
+          if(!el)return;
+          window.onerror=function(msg,url,line){
+            el.innerHTML='<div style="text-align:center;max-width:400px"><p style="color:#f87171;margin:0 0 .5rem;font-weight:600">Portfolio failed to load</p><p style="color:#64748b;margin:0 0 .25rem">'+msg+'</p><p style="color:#64748b;margin:0">Try a hard refresh (Ctrl+Shift+R). Contact: welly.almeida@gmail.com</p></div>';
+            return true;
+          };
+          setTimeout(function(){
+            if(el.parentNode){el.innerHTML='<div style="text-align:center;max-width:400px"><p style="color:#e2e8f0;margin:0 0 .5rem;font-weight:600">Portfolio failed to load</p><p style="color:#64748b;margin:0">Try a hard refresh (Ctrl+Shift+R). If the problem persists, the deployment may still be updating.</p></div>';}
+          },10000);
+        })();
       </script>
       <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
     </div>
