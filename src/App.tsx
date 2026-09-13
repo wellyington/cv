@@ -114,7 +114,7 @@ function App() {
       <div className="pointer-events-none fixed -right-48 top-[38%] z-0 h-[32rem] w-[32rem] rounded-full bg-emerald-500/10 blur-[140px]" />
 
       <header className="sticky top-0 z-40 border-b border-white/[0.07] bg-[#090a0f]/85 backdrop-blur-xl">
-        <div className="mx-auto grid min-h-16 max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6 lg:gap-6 lg:px-8">
+        <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:gap-6 lg:px-8 xl:grid xl:grid-cols-[auto_minmax(0,1fr)_auto]">
           <a href="#hero" className="group flex shrink-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
             <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-400/40 bg-gradient-to-br from-indigo-500/90 to-emerald-400/80 font-mono text-xs font-bold text-white shadow-lg shadow-indigo-500/20">WA</span>
             <span className="hidden flex-col sm:flex"><strong className="whitespace-nowrap text-sm font-bold tracking-tight text-white">Wellington Almeida</strong><small className="whitespace-nowrap font-mono text-[10px] tracking-wide text-slate-400">CTO & Solutions Architect</small></span>
@@ -125,7 +125,7 @@ function App() {
             {navItems.map(([label, href]) => <a key={label} href={href} className="whitespace-nowrap rounded-md px-2.5 py-2 text-xs font-medium text-slate-400 transition hover:bg-white/[0.05] hover:text-white">{label}</a>)}
           </nav>
 
-          <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <div className="flex shrink-0 items-center justify-end gap-1.5 sm:gap-2 xl:justify-self-end">
             {/* Language dropdown */}
             <div className="relative">
               <button onClick={() => setLangOpen((open) => !open)} className="flex h-9 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-2 transition hover:bg-white/[0.08]" aria-label="Select language" aria-expanded={langOpen} aria-haspopup="listbox">
@@ -135,7 +135,7 @@ function App() {
               {langOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setLangOpen(false)} />
-                  <div className="absolute right-0 top-[2.75rem] z-50 w-40 rounded-xl border border-white/10 bg-[#11141e]/95 p-1.5 shadow-2xl backdrop-blur-xl" role="listbox">
+                  <div className="fixed right-4 top-[4.75rem] z-50 w-40 rounded-xl border border-white/10 bg-[#11141e]/95 p-1.5 shadow-2xl backdrop-blur-xl sm:absolute sm:right-0 sm:top-[2.75rem]" role="listbox">
                     {(Object.keys(flagMap) as Lang[]).map((code) => {
                       const F = flagMap[code].Flag;
                       return (
