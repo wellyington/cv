@@ -48,6 +48,13 @@ function App() {
   const [cliInput, setCliInput] = useState('');
   const [cliOutput, setCliOutput] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+
+  const flagMap: Record<Lang, { Flag: typeof FlagUK; label: string }> = {
+    en: { Flag: FlagUK, label: 'English' },
+    es: { Flag: FlagSpain, label: 'Español' },
+    pt: { Flag: FlagBrazil, label: 'Português' },
+  };
 
   const visibleCompetencies = useMemo(
     () => category === 'all' ? t.architecture.competencies : t.architecture.competencies.filter((item) => item.category === category),
@@ -119,17 +126,29 @@ function App() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-            {/* Language flags */}
-            <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-white/[0.03] p-1" role="group" aria-label="Language selection">
-              {([
-                ['en', FlagUK],
-                ['es', FlagSpain],
-                ['pt', FlagBrazil],
-              ] as [Lang, typeof FlagUK][]).map(([code, Flag]) => (
-                <button key={code} onClick={() => setLang(code)} className={`flag-button ${lang === code ? 'flag-button-active' : ''}`} aria-label={`${code === 'en' ? 'English' : code === 'es' ? 'Español' : 'Português'}`} aria-pressed={lang === code}>
-                  <Flag className="h-full w-full rounded-sm" />
-                </button>
-              ))}
+            {/* Language dropdown */}
+            <div className="relative">
+              <button onClick={() => setLangOpen((open) => !open)} className="flex h-9 items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.04] px-2 transition hover:bg-white/[0.08]" aria-label="Select language" aria-expanded={langOpen} aria-haspopup="listbox">
+                <span className="h-5 w-7 overflow-hidden rounded-sm">{(() => { const F = flagMap[lang].Flag; return <F className="h-full w-full" />; })()}</span>
+                <ChevronDown size={13} className={`text-slate-400 transition ${langOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {langOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setLangOpen(false)} />
+                  <div className="absolute right-0 top-[2.75rem] z-50 w-40 rounded-xl border border-white/10 bg-[#11141e]/95 p-1.5 shadow-2xl backdrop-blur-xl" role="listbox">
+                    {(Object.keys(flagMap) as Lang[]).map((code) => {
+                      const F = flagMap[code].Flag;
+                      return (
+                        <button key={code} onClick={() => { setLang(code); setLangOpen(false); }} className={`flex w-full items-center gap-2.5 rounded-lg px-2.5 py-2 transition ${code === lang ? 'bg-indigo-600/25 text-white' : 'text-slate-400 hover:bg-white/[0.06] hover:text-white'}`} role="option" aria-selected={code === lang}>
+                          <span className="h-4 w-6 overflow-hidden rounded-sm"><F className="h-full w-full" /></span>
+                          <span className="text-xs font-medium">{flagMap[code].label}</span>
+                          {code === lang && <Check size={13} className="ml-auto text-indigo-300" />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
             </div>
             <button onClick={() => copyText(email, t.specs.toast.email)} className="action-button hidden sm:inline-flex" aria-label="Copy email address to clipboard"><Mail size={14} /><span className="hidden lg:inline">{t.nav.copyEmail}</span></button>
             <button onClick={() => window.print()} className="primary-button hidden sm:inline-flex"><ArrowDownToLine size={14} /><span className="hidden lg:inline">{t.nav.resumePdf}</span></button>
