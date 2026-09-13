@@ -55,7 +55,25 @@
     <meta name="twitter:image" content="https://bolt.new/static/og_default.png">
 </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div id="initial-loader" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#090a0f;color:#94a3b8;font-family:ui-monospace,monospace;font-size:13px;z-index:9999">
+        <div style="width:24px;height:24px;border:2px solid rgba(255,255,255,.15);border-top-color:#818cf8;border-radius:50%;animation:spin 0.8s linear infinite"></div>
+        <span>Loading portfolio…</span>
+      </div>
+      <noscript>
+        <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#090a0f;color:#e2e8f0;font-family:ui-monospace,monospace;font-size:14px;padding:2rem;text-align:center">
+          <div>
+            <h1 style="font-size:1.25rem;margin:0 0 .5rem">Wellington Almeida</h1>
+            <p style="color:#94a3b8;margin:0">CTO &amp; Solutions Architect</p>
+            <p style="margin-top:1rem;color:#64748b">This portfolio requires JavaScript. Contact: welly.almeida@gmail.com</p>
+          </div>
+        </div>
+      </noscript>
+      <script>
+        (function(){var el=document.getElementById('initial-loader');if(!el)return;var t=setTimeout(function(){el.innerHTML='<div style="text-align:center"><p style="color:#e2e8f0;margin:0 0 .5rem">Portfolio failed to load</p><p style="color:#64748b;margin:0">Try a hard refresh (Ctrl+Shift+R). If the problem persists, the deployment may still be updating.</p></div>';},8000);window.addEventListener('load',function(){clearTimeout(t);var root=document.getElementById('root');if(root&&root.querySelector('#initial-loader')){setTimeout(function(){if(root.querySelector('#initial-loader')){root.removeChild(el);}},200);}});})();
+      </script>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
