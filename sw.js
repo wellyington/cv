@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cv-assets-v1';
+const CACHE_NAME = 'cv-assets-v2';
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
