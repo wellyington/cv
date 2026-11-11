@@ -4,8 +4,8 @@ import {
   ArrowRight,
   Check,
   ChevronDown,
+  ChevronRight,
   Copy,
-  ExternalLink,
   Github,
   Globe,
   Linkedin,
@@ -14,6 +14,7 @@ import {
   Menu,
   Phone,
   Terminal,
+  Timer,
   X,
 } from 'lucide-react';
 import {
@@ -36,7 +37,7 @@ function App() {
   const { lang, setLang, t } = useLanguage();
   const [category, setCategory] = useState<Category>('all');
   const [expandedRole, setExpandedRole] = useState(0);
-  const [snippet, setSnippet] = useState<SnippetKey>('profile');
+  const [snippet, setSnippet] = useState<SnippetKey>('equa');
   const [toast, setToast] = useState<ToastMessage>(null);
   const [cliInput, setCliInput] = useState('');
   const [cliOutput, setCliOutput] = useState<string | null>(null);
@@ -50,7 +51,7 @@ function App() {
   };
 
   const visibleCompetencies = useMemo(
-    () => (category === 'all' ? t.services.competencies : t.services.competencies.filter((item) => item.category === category)),
+    () => (category === 'all' ? t.architecture.competencies : t.architecture.competencies.filter((item) => item.category === category)),
     [category, t],
   );
   const activeSnippet = snippets[snippet];
@@ -85,21 +86,27 @@ function App() {
     const outputs: Record<string, string> = {
       help: c.help,
       status: c.status,
-      services: c.services,
+      stacks: c.stacks,
       contact: c.contact,
-      reach: c.reach,
+      benchmarks: c.benchmarks,
     };
     if (command === 'clear') setCliOutput(null);
     else setCliOutput(outputs[command] ?? c.unknown.replace('{cmd}', command));
     setCliInput('');
   };
 
+  const openSnippet = (key: SnippetKey) => {
+    setSnippet(key);
+    document.getElementById('specs')?.scrollIntoView({ behavior: 'smooth' });
+    showToast(t.specs.toast.loaded.replace('{key}', key.toUpperCase()));
+  };
+
   const navItems: [string, string][] = [
     [t.nav.profile, '#hero'],
-    [t.nav.services, '#services'],
-    [t.nav.practice, '#practice'],
-    [t.nav.work, '#work'],
-    [t.nav.background, '#credentials'],
+    [t.nav.architecture, '#services'],
+    [t.nav.experience, '#practice'],
+    [t.nav.projects, '#work'],
+    [t.nav.credentials, '#credentials'],
     [t.nav.questions, '#faq'],
     [t.nav.mainSite, links.site],
   ];
@@ -118,7 +125,7 @@ function App() {
             <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-indigo-400/40 bg-gradient-to-br from-indigo-500/90 to-emerald-400/80 font-mono text-xs font-bold text-white shadow-lg shadow-indigo-500/20" aria-hidden="true">WA</span>
             <span className="hidden flex-col sm:flex">
               <strong className="whitespace-nowrap text-sm font-bold tracking-tight text-white">Wellington Almeida</strong>
-              <small className="whitespace-nowrap font-mono text-[10px] tracking-wide text-slate-400">Wellyington · Freelance</small>
+              <small className="whitespace-nowrap font-mono text-[10px] tracking-wide text-slate-400">CTO & Solutions Architect</small>
             </span>
           </a>
 
@@ -220,7 +227,7 @@ function App() {
           </nav>
           <div className="mb-6 flex flex-wrap gap-3">
             <span className="eyebrow-pill">{t.hero.identifier}</span>
-            <span className="eyebrow-pill text-indigo-200"><MapPin size={12} aria-hidden="true" /> {t.hero.reach}</span>
+            <span className="eyebrow-pill text-indigo-200"><Timer size={12} aria-hidden="true" /> {t.hero.edgeLatency}</span>
           </div>
           <div className="grid items-start gap-8 lg:grid-cols-12">
             <div className="space-y-6 lg:col-span-8">
@@ -236,9 +243,9 @@ function App() {
               </address>
               <p className="max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">{t.hero.intro}</p>
               <div className="flex flex-wrap gap-3">
-                <a href="#work" className="primary-button px-4 py-2.5">{t.hero.viewWork} <ArrowRight size={15} aria-hidden="true" /></a>
-                <a href="#services" className="action-button px-4 py-2.5">{t.hero.services}</a>
-                <a href="#contact" className="action-button border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-emerald-200"><Terminal size={14} aria-hidden="true" /> {t.hero.contact}</a>
+                <a href="#practice" className="primary-button px-4 py-2.5">{t.hero.inspectTimeline} <ArrowRight size={15} aria-hidden="true" /></a>
+                <a href="#services" className="action-button px-4 py-2.5">{t.hero.architecturePlaybooks}</a>
+                <a href="#specs" className="action-button border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-emerald-200"><Terminal size={14} aria-hidden="true" /> {t.hero.liveTerminal}</a>
               </div>
             </div>
             <div className="grid gap-4 sm:grid-cols-3 lg:col-span-4 lg:grid-cols-1">
@@ -257,9 +264,9 @@ function App() {
         </section>
 
         <section id="services" className="deferred-section scroll-mt-24 space-y-6" aria-labelledby="services-heading">
-          <SectionHeading id="services-heading" module={t.services.module} title={t.services.title} accent="indigo" caption={t.services.caption} />
-          <div className="no-print flex flex-wrap gap-2" role="group" aria-label={t.services.caption}>
-            {t.services.filters.map(([key, label]) => (
+          <SectionHeading id="services-heading" module={t.architecture.module} title={t.architecture.title} accent="indigo" caption={t.architecture.caption} />
+          <div className="no-print flex flex-wrap gap-2" role="group" aria-label={t.architecture.caption}>
+            {t.architecture.filters.map(([key, label]) => (
               <button key={key} type="button" onClick={() => setCategory(key)} aria-pressed={category === key} className={`filter-button ${category === key ? 'filter-button-active' : ''}`}>{label}</button>
             ))}
           </div>
@@ -292,9 +299,9 @@ function App() {
         </section>
 
         <section id="practice" className="deferred-section scroll-mt-24 space-y-6" aria-labelledby="practice-heading">
-          <SectionHeading id="practice-heading" module={t.practice.module} title={t.practice.title} accent="emerald" caption={t.practice.caption} />
+          <SectionHeading id="practice-heading" module={t.experience.module} title={t.experience.title} accent="emerald" caption={t.experience.caption} />
           <div className="relative ml-3 space-y-8 border-l border-white/15 pl-6 sm:ml-6 sm:pl-10">
-            {t.practice.items.map((item, index) => {
+            {t.experience.experiences.map((item, index) => {
               const accent = accentClasses[item.accent];
               const expanded = expandedRole === index;
               const panelId = `practice-detail-${index}`;
@@ -306,7 +313,7 @@ function App() {
                       <div>
                         <p className={`flex flex-wrap items-center gap-2 font-mono text-xs font-semibold uppercase tracking-wider ${accent.text}`}>
                           {item.role}
-                          {index === 0 && <span className="rounded border border-emerald-500/35 bg-emerald-500/10 px-2 py-0.5 text-[10px] normal-case tracking-normal text-emerald-300">{t.practice.activeRole}</span>}
+                          {index === 0 && <span className="rounded border border-emerald-500/35 bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-300">{t.experience.activeRole}</span>}
                         </p>
                         <h3 className="mt-1 text-xl font-bold text-white sm:text-2xl">{item.company}</h3>
                         <p className="font-mono text-xs text-slate-400">{item.location}</p>
@@ -322,7 +329,7 @@ function App() {
                       ))}
                     </ul>
                     <div className={expanded ? 'mt-5 border-t border-white/10 pt-4' : 'hidden'} id={panelId}>
-                      <div className={`mb-3 flex items-center gap-2 font-mono text-xs font-semibold ${accent.text}`}>{t.practice.detailLabel}</div>
+                      <div className={`mb-3 flex items-center gap-2 font-mono text-xs font-semibold ${accent.text}`}>{t.experience.techBreakdown}</div>
                       <div className="grid gap-3 sm:grid-cols-3">
                         {item.specs.map(([label, value]) => (
                           <div key={label} className="rounded-lg border border-white/[0.06] bg-black/30 p-3 font-mono">
@@ -339,7 +346,7 @@ function App() {
                       aria-expanded={expanded}
                       aria-controls={panelId}
                     >
-                      {expanded ? t.practice.collapseLabel : t.practice.expandLabel}
+                      {expanded ? t.experience.collapseLabel : t.experience.expandLabel}
                       <ChevronDown size={13} className={`transition ${expanded ? 'rotate-180' : ''}`} aria-hidden="true" />
                     </button>
                   </div>
@@ -352,26 +359,27 @@ function App() {
         <section id="work" className="deferred-section scroll-mt-24 space-y-6" aria-labelledby="work-heading">
           <SectionHeading id="work-heading" module={t.projects.module} title={t.projects.title} accent="indigo" caption={t.projects.caption} />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {t.projects.items.map((project) => {
+            {t.projects.blueprints.map((project) => {
               const accent = accentClasses[project.accent];
+              const wide = project.number === '07';
               return (
-                <article key={project.number} className="glass-panel group flex flex-col justify-between rounded-2xl p-6 transition hover:-translate-y-1 hover:border-white/20">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <span className={`rounded border ${accent.border} ${accent.soft} px-2.5 py-1 font-mono text-[10px] uppercase ${accent.text}`}>{project.stack}</span>
-                      <span className="font-mono text-xs text-slate-500">{project.number}</span>
+                <article key={project.number} className={`glass-panel group flex flex-col justify-between rounded-2xl p-6 transition hover:-translate-y-1 hover:border-white/20 ${wide ? 'md:col-span-2 lg:col-span-3' : ''}`}>
+                  <div className={wide ? 'lg:flex lg:items-center lg:justify-between lg:gap-8' : ''}>
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <span className={`rounded border ${accent.border} ${accent.soft} px-2.5 py-1 font-mono text-[10px] uppercase ${accent.text}`}>{project.stack}</span>
+                        <span className="font-mono text-xs text-slate-500">SYS-ARCH-{project.number}</span>
+                      </div>
+                      <h3 className={`text-lg font-bold text-white transition ${accent.hover}`}>{project.title}</h3>
+                      <p className="text-xs leading-5 text-slate-300">{project.description}</p>
+                      <ul className="space-y-1 font-mono text-[11px] text-slate-400">
+                        {project.bullets.map((bullet) => <li key={bullet}><span className={accent.text} aria-hidden="true">›</span> {bullet}</li>)}
+                      </ul>
                     </div>
-                    <h3 className={`text-lg font-bold text-white transition ${accent.hover}`}>
-                      <a href={project.href} className="hover:underline">{project.title}</a>
-                    </h3>
-                    <p className="text-xs leading-5 text-slate-300">{project.description}</p>
-                    <ul className="space-y-1 font-mono text-[11px] text-slate-400">
-                      {project.bullets.map((bullet) => <li key={bullet}><span className={accent.text} aria-hidden="true">›</span> {bullet}</li>)}
-                    </ul>
-                  </div>
-                  <div className="mt-6 flex items-center justify-between border-t border-white/[0.06] pt-3">
-                    <span className="font-mono text-[11px] text-slate-400">{project.footer}</span>
-                    <a href={project.href} className={`inline-flex items-center gap-1 font-mono text-xs ${accent.text}`}>{t.projects.viewWork} <ExternalLink size={14} aria-hidden="true" /></a>
+                    <div className={`mt-6 flex items-center justify-between border-t border-white/[0.06] pt-3 ${wide ? 'lg:mt-0 lg:min-w-[260px] lg:border-0 lg:pt-0' : ''}`}>
+                      <span className="font-mono text-[11px] text-slate-400">{project.footer}</span>
+                      <button type="button" onClick={() => openSnippet(project.snippet)} className={`inline-flex items-center gap-1 font-mono text-xs ${accent.text}`}>{t.projects.inspectSpec} <ChevronRight size={14} aria-hidden="true" /></button>
+                    </div>
                   </div>
                 </article>
               );
@@ -394,6 +402,7 @@ function App() {
                 <div key={language} className="space-y-2 border-t border-white/[0.06] pt-4 first:border-0 first:pt-0">
                   <div className="flex items-center justify-between gap-2 font-mono text-xs">
                     <span className="font-bold text-white">{language} <span className="ml-1 rounded border border-emerald-500/25 bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-300">{level}</span></span>
+                    <span className="text-slate-400">{width}</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full bg-white/[0.06]" role="presentation">
                     <div className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400" style={{ width }} />
@@ -438,7 +447,7 @@ function App() {
                 <span className="ml-2 font-mono text-xs text-slate-400">{activeSnippet.filename}</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-emerald-400">{t.specs.status}</span>
+                <span className="font-mono text-[10px] text-emerald-400">{t.specs.compiledIn}</span>
                 <button type="button" onClick={() => copyText(activeSnippet.code, t.specs.toast.code)} className="inline-flex items-center gap-1 rounded bg-white/10 px-2 py-1 font-mono text-xs text-slate-300 transition hover:bg-white/15 hover:text-white">
                   <Copy size={12} aria-hidden="true" /> {t.specs.copyCode}
                 </button>
@@ -463,8 +472,8 @@ function App() {
             <h2 id="contact-heading" className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{t.cta.title}</h2>
             <p className="text-sm leading-6 text-slate-300 sm:text-base">{t.cta.description}</p>
             <div className="flex flex-wrap justify-center gap-3 pt-2">
-              <a href={links.email} className="primary-button px-5 py-3"><Mail size={15} aria-hidden="true" /> {t.cta.email.replace('{email}', email)}</a>
-              <a href={links.phone} className="action-button px-5 py-3"><Phone size={15} className="text-emerald-300" aria-hidden="true" /> {t.cta.call}</a>
+              <a href={links.email} className="primary-button px-5 py-3"><Mail size={15} aria-hidden="true" /> {t.cta.copyEmail.replace('{email}', email)}</a>
+              <a href={links.phone} className="action-button px-5 py-3"><Phone size={15} className="text-emerald-300" aria-hidden="true" /> {t.cta.callDirect}</a>
               <a href={links.whatsapp} target="_blank" rel="noopener noreferrer" className="action-button px-5 py-3">{t.cta.whatsapp}</a>
             </div>
           </div>
