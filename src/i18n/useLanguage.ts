@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { LANGS, translations, type Lang } from '@/i18n/translations';
+import { LANG_HTML, LANGS, OG_LOCALE, links, translations, type Lang } from '@/i18n/translations';
 
 const STORAGE_KEY = 'wa-portfolio-lang';
 const VALID_LANGS = new Set<string>(LANGS);
@@ -39,7 +39,7 @@ export function useLanguage() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = LANG_HTML[lang];
     const t = translations[lang];
 
     document.title = t.meta.title;
@@ -50,10 +50,12 @@ export function useLanguage() {
     };
 
     setMeta('meta[name="description"]', 'content', t.meta.description);
+    setMeta('meta[name="keywords"]', 'content', t.meta.keywords);
     setMeta('meta[property="og:title"]', 'content', t.meta.ogTitle);
     setMeta('meta[property="og:description"]', 'content', t.meta.ogDescription);
+    setMeta('meta[property="og:locale"]', 'content', OG_LOCALE[lang]);
     setMeta('meta[name="twitter:title"]', 'content', t.meta.ogTitle);
-    setMeta('meta[name="twitter:description"]', 'content', t.meta.twitterDescription);
+    setMeta('meta[name="twitter:description"]', 'content', t.meta.ogDescription);
 
     const updateHreflang = (hreflang: string, href: string) => {
       let el = document.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`);
@@ -66,10 +68,10 @@ export function useLanguage() {
       el.setAttribute('href', href);
     };
 
-    const base = window.location.origin + window.location.pathname;
+    const base = links.cv;
     updateHreflang('en', base);
     updateHreflang('es', `${base}?lang=es`);
-    updateHreflang('pt', `${base}?lang=pt`);
+    updateHreflang('pt-BR', `${base}?lang=pt`);
     updateHreflang('x-default', base);
   }, [lang]);
 

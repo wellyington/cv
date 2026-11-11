@@ -12,6 +12,20 @@
 
 html { scroll-behavior: smooth; }
 body { margin: 0; min-width: 320px; background: #090a0f; }
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: 100;
+  transform: translateY(-140%);
+  border-radius: 0.5rem;
+  background: #4f46e5;
+  color: #fff;
+  padding: 0.55rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 650;
+}
+.skip-link:focus { transform: translateY(0.75rem); outline: 2px solid #fff; outline-offset: 2px; }
 button, a, input { -webkit-tap-highlight-color: transparent; }
 ::selection { background: rgba(99, 102, 241, .35); color: #fff; }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -50,7 +64,7 @@ button, a, input { -webkit-tap-highlight-color: transparent; }
 }
 
 @media print {
-  header, footer, button, .eyebrow-pill, #specs, .glass-panel::before { display: none !important; }
+  header, footer, .no-print, .skip-link { display: none !important; }
   body, .min-h-screen { background: #fff !important; color: #111827 !important; }
   main { max-width: none !important; padding: 0 !important; }
   section { break-inside: avoid; margin-bottom: 24px !important; }
