@@ -1,3 +1,7 @@
+# Served at https://wellyington.github.io/cv/robots.txt.
+# Crawlers only honour the host file at https://wellyington.github.io/robots.txt.
+# Ask the main site to list https://wellyington.github.io/cv/ in its sitemap.
+
 User-agent: *
 Allow: /
 

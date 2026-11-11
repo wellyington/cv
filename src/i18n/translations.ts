@@ -20,7 +20,29 @@ export const LANG_FULL_NAMES: Record<Lang, string> = {
 export const LANG_HTML_TAGS: Record<Lang, string> = {
   en: 'en',
   es: 'es',
-  pt: 'pt',
+  pt: 'pt-BR',
+};
+
+export const LANG_HTML = LANG_HTML_TAGS;
+
+export const OG_LOCALE: Record<Lang, string> = {
+  en: 'en_GB',
+  es: 'es_ES',
+  pt: 'pt_BR',
+};
+
+export const links = {
+  site: 'https://wellyington.github.io/',
+  cv: 'https://wellyington.github.io/cv/',
+  featured: 'https://wellyington.github.io/#featured',
+  x: 'https://x.com/wellyington',
+  instagram: 'https://instagram.com/wellyington',
+  facebook: 'https://facebook.com/wellyington/',
+  linkedin: 'https://www.linkedin.com/in/wellyington/',
+  github: 'https://github.com/wellyington',
+  email: 'mailto:welly.almeida@gmail.com',
+  phone: 'tel:+34604286691',
+  whatsapp: 'https://wa.me/34604286691',
 };
 
 export type Category = 'all' | 'frontend' | 'microservices' | 'realtime' | 'infra';
@@ -75,6 +97,7 @@ export type Translation = {
     ogTitle: string;
     ogDescription: string;
     twitterDescription: string;
+    keywords: string;
   };
   nav: {
     profile: string;
@@ -85,6 +108,9 @@ export type Translation = {
     systemSpecs: string;
     copyEmail: string;
     resumePdf: string;
+    questions: string;
+    mainSite: string;
+    skip: string;
   };
   hero: {
     identifier: string;
@@ -131,6 +157,11 @@ export type Translation = {
     education: EducationT[];
     languages: [string, string, string, string][];
   };
+  faq: {
+    module: string;
+    title: string;
+    items: { question: string; answer: string }[];
+  };
   specs: {
     title: string;
     compiledIn: string;
@@ -161,11 +192,16 @@ export type Translation = {
     description: string;
     copyEmail: string;
     callDirect: string;
+    whatsapp: string;
   };
   footer: {
     tagline: string;
+    site: string;
     linkedin: string;
     github: string;
+    x: string;
+    instagram: string;
+    facebook: string;
     email: string;
     backToTop: string;
     location: string;
@@ -177,11 +213,12 @@ const sharedIcons = { Globe2, Server, Zap, Database, Layers3, Network };
 export const translations: Record<Lang, Translation> = {
   en: {
     meta: {
-      title: 'Wellington Almeida — CTO & Polyglot Solutions Architect',
-      description: 'Executive portfolio and digital resume of Wellington Almeida — Chief Technology Officer & Polyglot Solutions Architect based in Costa del Sol, Spain. Expert in Next.js, Go microservices, distributed systems, and real-time architectures.',
-      ogTitle: 'Wellington Almeida — CTO & Polyglot Solutions Architect',
-      ogDescription: 'Executive systems architecture, distributed microservices, luxury platforms, and modern polyglot engineering.',
-      twitterDescription: 'Executive systems architecture, distributed microservices, luxury platforms, and modern polyglot engineering.',
+      title: 'Wellyington | CTO & Freelance Web Developer, UK & Europe',
+      description: 'CTO and solutions architect with 15+ years, and a freelance web developer, designer and SEO/AEO consultant. Wellyington, Estepona — remote across the UK and Europe.',
+      ogTitle: 'Wellyington | CTO & Freelance Web Developer, UK & Europe',
+      ogDescription: 'CTO and polyglot solutions architect with 15+ years, also a freelance web developer, designer and SEO/AEO consultant. Based in Estepona, remote across the UK and Europe.',
+      twitterDescription: 'CTO and polyglot solutions architect with 15+ years, also a freelance web developer, designer and SEO/AEO consultant. Based in Estepona, remote across the UK and Europe.',
+      keywords: 'Wellyington, Wellington Almeida, CTO, Chief Technology Officer, solutions architect, technical lead, fractional CTO, freelance web developer, web designer, digital strategist, SEO, AEO, UK, Europe, remote, Estepona',
     },
     nav: {
       profile: 'Profile',
@@ -190,16 +227,19 @@ export const translations: Record<Lang, Translation> = {
       projects: 'Projects',
       credentials: 'Credentials',
       systemSpecs: 'System Specs',
-      copyEmail: 'Copy Email',
-      resumePdf: 'Resume PDF',
+      copyEmail: 'Copy email',
+      resumePdf: 'Print CV',
+      questions: 'Questions',
+      mainSite: 'Main site',
+      skip: 'Skip to content',
     },
     hero: {
-      identifier: 'SYSTEM IDENTIFIER // WELLY-ALMEIDA-ARCH-v2026',
+      identifier: 'SYSTEM IDENTIFIER // WELLYINGTON-ARCH-v2026',
       edgeLatency: 'EDGE LATENCY < 45ms',
       name: 'Wellington Almeida',
-      subtitle: 'Chief Technology Officer & Polyglot Solutions Architect',
-      location: 'Estepona, Costa del Sol, Spain',
-      intro: 'High-impact executive technologist with a 15-year track record leading engineering divisions, luxury real estate platforms, and distributed systems architecture. Specializes in transforming complex business domains into ultra-low-latency, resilient cloud architectures.',
+      subtitle: 'CTO, solutions architect and freelance web developer',
+      location: 'Estepona, Costa del Sol, Spain — UK, Europe and remote',
+      intro: 'High-impact executive technologist with a 15-year track record leading engineering divisions, luxury real estate platforms, and distributed systems architecture. Specializes in transforming complex business domains into ultra-low-latency, resilient cloud architectures. Also a freelance web developer, digital designer, strategist and SEO/AEO consultant, based in Estepona and available remotely across the UK and Europe. Works in English, Portuguese and Spanish.',
       inspectTimeline: 'Inspect Career Timeline',
       architecturePlaybooks: 'Architecture Playbooks',
       liveTerminal: '$ live-terminal',
@@ -281,11 +321,11 @@ export const translations: Record<Lang, Translation> = {
       copyCode: 'copy code',
       placeholder: "type 'help', 'stacks', 'contact'...",
       enterLabel: 'press [Enter]',
-      prompt: 'welly@architecture-portal:~$',
+      prompt: 'wellyington@cv:~$',
       snippetLabels: [['equa', 'next.config.ts'], ['go', 'server.go (gRPC)'], ['elixir', 'live_view.ex'], ['kamal', 'deploy.yml (Kamal)']],
       cli: {
         help: 'Available commands: status, stacks, contact, benchmarks, clear',
-        status: 'AVAILABLE: Wellington is taking Fractional CTO & Advisory appointments for high-growth ventures.',
+        status: 'AVAILABLE: Wellington is taking fractional CTO and advisory appointments, and freelance web development, design, strategy and SEO/AEO work across the UK and Europe.',
         stacks: 'Next.js 15, Go gRPC, Elixir Phoenix, Rails 8 Kamal, .NET 8, SvelteKit + Supabase, PostgreSQL, Redis.',
         contact: 'Email: welly.almeida@gmail.com | Phone: +34 604 286 691 | Location: Estepona, Spain',
         benchmarks: 'Core Web Vitals: 99/100 | TTFB: <180ms edge | 12+ markets scaled | 35 engineers managed',
@@ -299,30 +339,58 @@ export const translations: Record<Lang, Translation> = {
         loaded: 'Loaded blueprint: {key}',
       },
     },
+    faq: {
+      module: '07 // Questions',
+      title: 'For companies and clients',
+      items: [
+        {
+          question: 'Are you available for CTO, technical lead or solutions architect roles?',
+          answer: 'Yes, including remote and fractional CTO and advisory appointments. That covers executive technology leadership, high-throughput systems design, technology audit and restructuring, and luxury real estate portal engineering.',
+        },
+        {
+          question: 'Do you also take freelance web and SEO work?',
+          answer: 'Yes. Freelance web development, digital design, strategy, and SEO/AEO consulting from Estepona, in English, Portuguese and Spanish, remotely across the UK and Europe.',
+        },
+        {
+          question: 'Which languages do you work in?',
+          answer: 'English (native / C2), Portuguese (native / C2) and Spanish (fluent / C1–C2).',
+        },
+        {
+          question: 'How can I get in touch?',
+          answer: 'Email welly.almeida@gmail.com, or call or WhatsApp +34 604 286 691. The main site is wellyington.github.io and this CV is at wellyington.github.io/cv.',
+        },
+      ],
+    },
     cta: {
-      badge: 'OPEN FOR FRACTIONAL CTO & ADVISORY APPOINTMENTS',
+      badge: 'OPEN FOR FRACTIONAL CTO, ADVISORY AND FREELANCE WORK',
       title: 'Architecting Resilient Platforms That Outperform Benchmarks',
-      description: 'Available for executive CTO roles, high-throughput systems design, technology audit & restructuring, and luxury real estate portal engineering.',
-      copyEmail: 'Copy Email: {email}',
-      callDirect: 'Call Direct',
+      description: 'Available for executive CTO roles, fractional CTO and advisory appointments, high-throughput systems design, technology audit and restructuring, and luxury real estate portal engineering. Also available for freelance web development, digital design, strategy, and SEO/AEO consulting, remotely across the UK and Europe.',
+      copyEmail: 'Email {email}',
+      callDirect: 'Call',
+      whatsapp: 'WhatsApp',
     },
     footer: {
-      tagline: 'WELLINGTON ALMEIDA // EXECUTIVE PORTFOLIO 2026',
+      tagline: 'WELLYINGTON // CTO & FREELANCE',
+      site: 'Main site',
       linkedin: 'LinkedIn',
       github: 'GitHub',
+      x: 'X',
+      instagram: 'Instagram',
+      facebook: 'Facebook',
       email: 'Email',
       backToTop: 'Back to top ↑',
-      location: 'ESTEPONA, COSTA DEL SOL, SPAIN',
+      location: 'ESTEPONA · UK · EUROPE · REMOTE',
     },
   },
 
   es: {
     meta: {
-      title: 'Wellington Almeida — CTO & Arquitecto de Soluciones Políglota',
-      description: 'Portafolio ejecutivo y currículum digital de Wellington Almeida — Director de Tecnología (CTO) y Arquitecto de Soluciones Políglota con sede en Costa del Sol, España. Experto en Next.js, microservicios en Go, sistemas distribuidos y arquitecturas en tiempo real.',
-      ogTitle: 'Wellington Almeida — CTO & Arquitecto de Soluciones Políglota',
-      ogDescription: 'Arquitectura de sistemas ejecutivos, microservicios distribuidos, plataformas de lujo e ingeniería políglota moderna.',
-      twitterDescription: 'Arquitectura de sistemas ejecutivos, microservicios distribuidos, plataformas de lujo e ingeniería políglota moderna.',
+      title: 'Wellyington | CTO y desarrollador web freelance',
+      description: 'CTO y arquitecto de soluciones con más de 15 años, y desarrollador web freelance, diseñador y consultor SEO/AEO. Wellyington, Estepona — en remoto por el Reino Unido y Europa.',
+      ogTitle: 'Wellyington | CTO y desarrollador web freelance',
+      ogDescription: 'CTO y arquitecto de soluciones políglota con más de 15 años, y también desarrollador web freelance, diseñador y consultor SEO/AEO. Estepona, en remoto por el Reino Unido y Europa.',
+      twitterDescription: 'CTO y arquitecto de soluciones políglota con más de 15 años, y también desarrollador web freelance, diseñador y consultor SEO/AEO. Estepona, en remoto por el Reino Unido y Europa.',
+      keywords: 'Wellyington, Wellington Almeida, CTO, arquitecto de soluciones, tech lead, fractional CTO, desarrollador web freelance, diseñador, estratega, SEO, AEO, Reino Unido, Europa, remoto, Estepona',
     },
     nav: {
       profile: 'Perfil',
@@ -331,16 +399,19 @@ export const translations: Record<Lang, Translation> = {
       projects: 'Proyectos',
       credentials: 'Credenciales',
       systemSpecs: 'Especificaciones',
-      copyEmail: 'Copiar Email',
-      resumePdf: 'CV en PDF',
+      copyEmail: 'Copiar email',
+      resumePdf: 'Imprimir CV',
+      questions: 'Preguntas',
+      mainSite: 'Sitio principal',
+      skip: 'Saltar al contenido',
     },
     hero: {
-      identifier: 'IDENTIFICADOR DE SISTEMA // WELLY-ALMEIDA-ARCH-v2026',
+      identifier: 'IDENTIFICADOR DE SISTEMA // WELLYINGTON-ARCH-v2026',
       edgeLatency: 'LATENCIA EDGE < 45ms',
       name: 'Wellington Almeida',
-      subtitle: 'Director de Tecnología & Arquitecto de Soluciones Políglota',
-      location: 'Estepona, Costa del Sol, España',
-      intro: 'Tecnólogo ejecutivo de alto impacto con más de 15 años de experiencia liderando divisiones de ingeniería, plataformas inmobiliarias de lujo y arquitectura de sistemas distribuidos. Especializado en transformar dominios de negocio complejos en arquitecturas cloud resilientes y de latencia ultrabaja.',
+      subtitle: 'CTO, arquitecto de soluciones y desarrollador web freelance',
+      location: 'Estepona, Costa del Sol, España — Reino Unido, Europa y en remoto',
+      intro: 'Tecnólogo ejecutivo de alto impacto con más de 15 años de experiencia liderando divisiones de ingeniería, plataformas inmobiliarias de lujo y arquitectura de sistemas distribuidos. Especializado en transformar dominios de negocio complejos en arquitecturas cloud resilientes y de latencia ultrabaja. También desarrollador web freelance, diseñador digital, estratega y consultor SEO/AEO, con base en Estepona y disponible en remoto en el Reino Unido y Europa. Trabaja en inglés, portugués y español.',
       inspectTimeline: 'Ver Trayectoria Profesional',
       architecturePlaybooks: 'Playbooks de Arquitectura',
       liveTerminal: '$ terminal-en-vivo',
@@ -422,11 +493,11 @@ export const translations: Record<Lang, Translation> = {
       copyCode: 'copiar código',
       placeholder: "escribe 'help', 'stacks', 'contact'...",
       enterLabel: 'pulsa [Enter]',
-      prompt: 'welly@architecture-portal:~$',
+      prompt: 'wellyington@cv:~$',
       snippetLabels: [['equa', 'next.config.ts'], ['go', 'server.go (gRPC)'], ['elixir', 'live_view.ex'], ['kamal', 'deploy.yml (Kamal)']],
       cli: {
         help: 'Comandos disponibles: status, stacks, contact, benchmarks, clear',
-        status: 'DISPONIBLE: Wellington acepta cargas de Fractional CTO y asesoría para empresas de alto crecimiento.',
+        status: 'DISPONIBLE: Wellington acepta cargos de fractional CTO y asesoría, y también trabajo freelance de desarrollo web, diseño, estrategia y SEO/AEO en el Reino Unido y Europa.',
         stacks: 'Next.js 15, Go gRPC, Elixir Phoenix, Rails 8 Kamal, .NET 8, SvelteKit + Supabase, PostgreSQL, Redis.',
         contact: 'Email: welly.almeida@gmail.com | Tel: +34 604 286 691 | Ubicación: Estepona, España',
         benchmarks: 'Core Web Vitals: 99/100 | TTFB: <180ms edge | 12+ mercados escalados | 35 ingenieros gestionados',
@@ -440,30 +511,58 @@ export const translations: Record<Lang, Translation> = {
         loaded: 'Blueprint cargado: {key}',
       },
     },
+    faq: {
+      module: '07 // Preguntas',
+      title: 'Para empresas y clientes',
+      items: [
+        {
+          question: '¿Estás disponible para roles de CTO, tech lead o arquitecto de soluciones?',
+          answer: 'Sí, también en remoto y como fractional CTO y asesoría. Incluye liderazgo tecnológico ejecutivo, diseño de sistemas de alto rendimiento, auditoría y reestructuración tecnológica, e ingeniería de portales inmobiliarios de lujo.',
+        },
+        {
+          question: '¿También aceptas trabajo freelance de web y SEO?',
+          answer: 'Sí. Desarrollo web, diseño digital, estrategia y consultoría SEO/AEO desde Estepona, en inglés, portugués y español, en remoto en el Reino Unido y Europa.',
+        },
+        {
+          question: '¿En qué idiomas trabajas?',
+          answer: 'Inglés (nativo / C2), portugués (nativo / C2) y español (fluido / C1–C2).',
+        },
+        {
+          question: '¿Cómo contactar?',
+          answer: 'Email welly.almeida@gmail.com, o llamada y WhatsApp +34 604 286 691. El sitio principal es wellyington.github.io y este CV está en wellyington.github.io/cv.',
+        },
+      ],
+    },
     cta: {
-      badge: 'ABIERTO A CARGOS FRACTIONAL CTO Y ASESORÍAS',
+      badge: 'ABIERTO A FRACTIONAL CTO, ASESORÍA Y FREELANCE',
       title: 'Arquitectando Plataformas Resilientes que Superan los Benchmarks',
-      description: 'Disponible para roles CTO ejecutivos, diseño de sistemas de alto rendimiento, auditoría tecnológica y reestructuración, e ingeniería de portales inmobiliarios de lujo.',
-      copyEmail: 'Copiar Email: {email}',
-      callDirect: 'Llamar Directo',
+      description: 'Disponible para roles CTO ejecutivos, fractional CTO y asesoría, diseño de sistemas de alto rendimiento, auditoría tecnológica y reestructuración, e ingeniería de portales inmobiliarios de lujo. También para desarrollo web, diseño digital, estrategia y consultoría SEO/AEO, en remoto en el Reino Unido y Europa.',
+      copyEmail: 'Email {email}',
+      callDirect: 'Llamar',
+      whatsapp: 'WhatsApp',
     },
     footer: {
-      tagline: 'WELLINGTON ALMEIDA // PORTAFOLIO EJECUTIVO 2026',
+      tagline: 'WELLYINGTON // CTO Y FREELANCE',
+      site: 'Sitio principal',
       linkedin: 'LinkedIn',
       github: 'GitHub',
+      x: 'X',
+      instagram: 'Instagram',
+      facebook: 'Facebook',
       email: 'Email',
       backToTop: 'Volver arriba ↑',
-      location: 'ESTEPONA, COSTA DEL SOL, ESPAÑA',
+      location: 'ESTEPONA · REINO UNIDO · EUROPA · REMOTO',
     },
   },
 
   pt: {
     meta: {
-      title: 'Wellington Almeida — CTO & Arquiteto de Soluções Poliglota',
-      description: 'Portfólio executivo e currículo digital de Wellington Almeida — Diretor de Tecnologia (CTO) e Arquiteto de Soluções Poliglota baseado na Costa del Sol, Espanha. Especialista em Next.js, microsserviços em Go, sistemas distribuídos e arquiteturas em tempo real.',
-      ogTitle: 'Wellington Almeida — CTO & Arquiteto de Soluções Poliglota',
-      ogDescription: 'Arquitetura de sistemas executivos, microsserviços distribuídos, plataformas de luxo e engenharia poliglota moderna.',
-      twitterDescription: 'Arquitetura de sistemas executivos, microsserviços distribuídos, plataformas de luxo e engenharia poliglota moderna.',
+      title: 'Wellyington | CTO e desenvolvedor web freelancer',
+      description: 'CTO e arquiteto de soluções com mais de 15 anos, e desenvolvedor web freelancer, designer e consultor de SEO/AEO. Wellyington, Estepona — remoto no Reino Unido e na Europa.',
+      ogTitle: 'Wellyington | CTO e desenvolvedor web freelancer',
+      ogDescription: 'CTO e arquiteto de soluções poliglota com mais de 15 anos, e também desenvolvedor web freelancer, designer e consultor de SEO/AEO. Estepona, remoto no Reino Unido e na Europa.',
+      twitterDescription: 'CTO e arquiteto de soluções poliglota com mais de 15 anos, e também desenvolvedor web freelancer, designer e consultor de SEO/AEO. Estepona, remoto no Reino Unido e na Europa.',
+      keywords: 'Wellyington, Wellington Almeida, CTO, arquiteto de soluções, tech lead, fractional CTO, desenvolvedor web freelancer, designer, estrategista, SEO, AEO, Reino Unido, Europa, remoto, Estepona',
     },
     nav: {
       profile: 'Perfil',
@@ -472,16 +571,19 @@ export const translations: Record<Lang, Translation> = {
       projects: 'Projetos',
       credentials: 'Credenciais',
       systemSpecs: 'Especificações',
-      copyEmail: 'Copiar Email',
-      resumePdf: 'CV em PDF',
+      copyEmail: 'Copiar email',
+      resumePdf: 'Imprimir CV',
+      questions: 'Perguntas',
+      mainSite: 'Site principal',
+      skip: 'Ir para o conteúdo',
     },
     hero: {
-      identifier: 'IDENTIFICADOR DE SISTEMA // WELLY-ALMEIDA-ARCH-v2026',
+      identifier: 'IDENTIFICADOR DE SISTEMA // WELLYINGTON-ARCH-v2026',
       edgeLatency: 'LATÊNCIA EDGE < 45ms',
       name: 'Wellington Almeida',
-      subtitle: 'Diretor de Tecnologia & Arquiteto de Soluções Poliglota',
-      location: 'Estepona, Costa del Sol, Espanha',
-      intro: 'Tecnólogo executivo de alto impacto com mais de 15 anos de experiência liderando divisões de engenharia, plataformas imobiliárias de luxo e arquitetura de sistemas distribuídos. Especializado em transformar domínios de negócio complexos em arquiteturas cloud resilientes e de latência ultrabaixa.',
+      subtitle: 'CTO, arquiteto de soluções e desenvolvedor web freelancer',
+      location: 'Estepona, Costa del Sol, Espanha — Reino Unido, Europa e remoto',
+      intro: 'Tecnólogo executivo de alto impacto com mais de 15 anos de experiência liderando divisões de engenharia, plataformas imobiliárias de luxo e arquitetura de sistemas distribuídos. Especializado em transformar domínios de negócio complexos em arquiteturas cloud resilientes e de latência ultrabaixa. Também desenvolvedor web freelancer, designer digital, estrategista e consultor de SEO/AEO, com base em Estepona e disponível para trabalho remoto no Reino Unido e na Europa. Trabalha em inglês, português e espanhol.',
       inspectTimeline: 'Ver Trajetória Profissional',
       architecturePlaybooks: 'Playbooks de Arquitetura',
       liveTerminal: '$ terminal-ao-vivo',
@@ -563,11 +665,11 @@ export const translations: Record<Lang, Translation> = {
       copyCode: 'copiar código',
       placeholder: "digite 'help', 'stacks', 'contact'...",
       enterLabel: 'pressione [Enter]',
-      prompt: 'welly@architecture-portal:~$',
+      prompt: 'wellyington@cv:~$',
       snippetLabels: [['equa', 'next.config.ts'], ['go', 'server.go (gRPC)'], ['elixir', 'live_view.ex'], ['kamal', 'deploy.yml (Kamal)']],
       cli: {
         help: 'Comandos disponíveis: status, stacks, contact, benchmarks, clear',
-        status: 'DISPONÍVEL: Wellington está aceitando cargas de Fractional CTO e assessoria para empresas de alto crescimento.',
+        status: 'DISPONÍVEL: Wellington aceita cargos de fractional CTO e assessoria, e também trabalho freelancer de desenvolvimento web, design, estratégia e SEO/AEO no Reino Unido e na Europa.',
         stacks: 'Next.js 15, Go gRPC, Elixir Phoenix, Rails 8 Kamal, .NET 8, SvelteKit + Supabase, PostgreSQL, Redis.',
         contact: 'Email: welly.almeida@gmail.com | Tel: +34 604 286 691 | Localização: Estepona, Espanha',
         benchmarks: 'Core Web Vitals: 99/100 | TTFB: <180ms edge | 12+ mercados escalados | 35 engenheiros gerenciados',
@@ -581,20 +683,47 @@ export const translations: Record<Lang, Translation> = {
         loaded: 'Blueprint carregado: {key}',
       },
     },
+    faq: {
+      module: '07 // Perguntas',
+      title: 'Para empresas e clientes',
+      items: [
+        {
+          question: 'Está disponível para cargos de CTO, tech lead ou arquiteto de soluções?',
+          answer: 'Sim, inclusive remoto e como fractional CTO e assessoria. Inclui liderança tecnológica executiva, design de sistemas de alto desempenho, auditoria e reestruturação tecnológica, e engenharia de portais imobiliários de luxo.',
+        },
+        {
+          question: 'Também aceita trabalho freelancer de web e SEO?',
+          answer: 'Sim. Desenvolvimento web, design digital, estratégia e consultoria de SEO/AEO a partir de Estepona, em inglês, português e espanhol, remoto no Reino Unido e na Europa.',
+        },
+        {
+          question: 'Em que idiomas trabalha?',
+          answer: 'Inglês (nativo / C2), português (nativo / C2) e espanhol (fluente / C1–C2).',
+        },
+        {
+          question: 'Como entrar em contacto?',
+          answer: 'Email welly.almeida@gmail.com, ou chamada e WhatsApp +34 604 286 691. O site principal é wellyington.github.io e este CV está em wellyington.github.io/cv.',
+        },
+      ],
+    },
     cta: {
-      badge: 'ABERTO A CARGOS FRACTIONAL CTO E ASSESSORIAS',
+      badge: 'ABERTO A FRACTIONAL CTO, ASSESSORIA E FREELANCER',
       title: 'Arquitetando Plataformas Resilientes que Superam os Benchmarks',
-      description: 'Disponível para cargos CTO executivos, design de sistemas de alto desempenho, auditoria tecnológica e reestruturação, e engenharia de portais imobiliários de luxo.',
-      copyEmail: 'Copiar Email: {email}',
-      callDirect: 'Ligar Direto',
+      description: 'Disponível para cargos CTO executivos, fractional CTO e assessoria, design de sistemas de alto desempenho, auditoria tecnológica e reestruturação, e engenharia de portais imobiliários de luxo. Também para desenvolvimento web, design digital, estratégia e consultoria de SEO/AEO, remoto no Reino Unido e na Europa.',
+      copyEmail: 'Email {email}',
+      callDirect: 'Ligar',
+      whatsapp: 'WhatsApp',
     },
     footer: {
-      tagline: 'WELLINGTON ALMEIDA // PORTFÓLIO EXECUTIVO 2026',
+      tagline: 'WELLYINGTON // CTO E FREELANCER',
+      site: 'Site principal',
       linkedin: 'LinkedIn',
       github: 'GitHub',
+      x: 'X',
+      instagram: 'Instagram',
+      facebook: 'Facebook',
       email: 'Email',
       backToTop: 'Voltar ao topo ↑',
-      location: 'ESTEPONA, COSTA DEL SOL, ESPANHA',
+      location: 'ESTEPONA · REINO UNIDO · EUROPA · REMOTO',
     },
   },
 };
